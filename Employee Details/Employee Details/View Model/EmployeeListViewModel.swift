@@ -20,7 +20,7 @@ class EmployeeListViewModel {
         guard let url = URL(string: urlString) else { return }
         
         connectionHandler.makeWebRequest(url: url) { response, rawData, error in
-            guard let error = error else {
+            guard let _ = error else {
                 
                 if let data = rawData {
                     do {

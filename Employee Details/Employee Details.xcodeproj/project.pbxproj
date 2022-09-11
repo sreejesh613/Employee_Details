@@ -39,6 +39,10 @@
 		79B84E0028CE53E700C007B8 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DF828CE53E700C007B8 /* Users+CoreDataProperties.swift */; };
 		79B84E0128CE53E700C007B8 /* Address+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DF928CE53E700C007B8 /* Address+CoreDataProperties.swift */; };
 		79B84E0228CE53E700C007B8 /* Geo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DFA28CE53E700C007B8 /* Geo+CoreDataClass.swift */; };
+		79B84E0528CE98BA00C007B8 /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84E0328CE98BA00C007B8 /* ProfileImageTableViewCell.swift */; };
+		79B84E0628CE98BA00C007B8 /* ProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B84E0428CE98BA00C007B8 /* ProfileImageTableViewCell.xib */; };
+		79B84E0928CE9A9F00C007B8 /* DetailTextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84E0728CE9A9F00C007B8 /* DetailTextViewTableViewCell.swift */; };
+		79B84E0A28CE9A9F00C007B8 /* DetailTextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B84E0828CE9A9F00C007B8 /* DetailTextViewTableViewCell.xib */; };
 		C2F98D630F47C1260E979785 /* Pods_Employee_Details.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EDB9732C46F30B246CDE1B /* Pods_Employee_Details.framework */; };
 		DF429E53E1F5C318931EB8A1 /* Pods_Employee_Details_Employee_DetailsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324067A4F67D8C32E4C1E8F1 /* Pods_Employee_Details_Employee_DetailsUITests.framework */; };
 /* End PBXBuildFile section */
@@ -101,6 +105,10 @@
 		79B84DF828CE53E700C007B8 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		79B84DF928CE53E700C007B8 /* Address+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		79B84DFA28CE53E700C007B8 /* Geo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Geo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		79B84E0328CE98BA00C007B8 /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
+		79B84E0428CE98BA00C007B8 /* ProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileImageTableViewCell.xib; sourceTree = "<group>"; };
+		79B84E0728CE9A9F00C007B8 /* DetailTextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTextViewTableViewCell.swift; sourceTree = "<group>"; };
+		79B84E0828CE9A9F00C007B8 /* DetailTextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailTextViewTableViewCell.xib; sourceTree = "<group>"; };
 		A1A07EA5618015E9E13530A0 /* Pods-Employee DetailsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employee DetailsTests.release.xcconfig"; path = "Target Support Files/Pods-Employee DetailsTests/Pods-Employee DetailsTests.release.xcconfig"; sourceTree = "<group>"; };
 		B893D3F51043D458CF0CCF37 /* Pods-Employee Details-Employee DetailsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employee Details-Employee DetailsUITests.release.xcconfig"; path = "Target Support Files/Pods-Employee Details-Employee DetailsUITests/Pods-Employee Details-Employee DetailsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BEF3B0F04627FD7ED67BC612 /* Pods-Employee DetailsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employee DetailsTests.debug.xcconfig"; path = "Target Support Files/Pods-Employee DetailsTests/Pods-Employee DetailsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -271,6 +279,10 @@
 				79B84DC128CE0D4000C007B8 /* UserListTableViewCell.xib */,
 				79B84DC428CE0D5000C007B8 /* UserDetailTableViewCell.swift */,
 				79B84DC528CE0D5000C007B8 /* UserDetailTableViewCell.xib */,
+				79B84E0328CE98BA00C007B8 /* ProfileImageTableViewCell.swift */,
+				79B84E0428CE98BA00C007B8 /* ProfileImageTableViewCell.xib */,
+				79B84E0728CE9A9F00C007B8 /* DetailTextViewTableViewCell.swift */,
+				79B84E0828CE9A9F00C007B8 /* DetailTextViewTableViewCell.xib */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -423,8 +435,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				79B84DC328CE0D4000C007B8 /* UserListTableViewCell.xib in Resources */,
+				79B84E0628CE98BA00C007B8 /* ProfileImageTableViewCell.xib in Resources */,
 				79B84D7628CDE4F500C007B8 /* LaunchScreen.storyboard in Resources */,
 				79B84D7328CDE4F500C007B8 /* Assets.xcassets in Resources */,
+				79B84E0A28CE9A9F00C007B8 /* DetailTextViewTableViewCell.xib in Resources */,
 				79B84DC728CE0D5000C007B8 /* UserDetailTableViewCell.xib in Resources */,
 				79B84DBE28CE0A3800C007B8 /* UserDetails.storyboard in Resources */,
 			);
@@ -571,7 +585,9 @@
 				79B84E0128CE53E700C007B8 /* Address+CoreDataProperties.swift in Sources */,
 				79B84DB828CE044600C007B8 /* EmployeeListViewModel.swift in Sources */,
 				79B84DB628CE027900C007B8 /* ConnectionHandler.swift in Sources */,
+				79B84E0528CE98BA00C007B8 /* ProfileImageTableViewCell.swift in Sources */,
 				79B84DFD28CE53E700C007B8 /* Company+CoreDataProperties.swift in Sources */,
+				79B84E0928CE9A9F00C007B8 /* DetailTextViewTableViewCell.swift in Sources */,
 				79B84DFB28CE53E700C007B8 /* Geo+CoreDataProperties.swift in Sources */,
 				79B84D7128CDE4F500C007B8 /* Employee_Details.xcdatamodeld in Sources */,
 				79B84DFF28CE53E700C007B8 /* Users+CoreDataClass.swift in Sources */,

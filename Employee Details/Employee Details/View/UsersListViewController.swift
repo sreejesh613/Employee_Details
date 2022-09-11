@@ -94,7 +94,7 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = userListTableView.dequeueReusableCell(withIdentifier: Identifiers.CellIDs.userListCellId) as! UserListTableViewCell
         
-        //Fetch all users from the CoreData
+        //Fetch users from the CoreData
         let users = self.fetchUsers()
         let companies = self.fetchCompanies()
         
@@ -124,14 +124,34 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Did select tablevew row at index: \(indexPath)")
-        guard let users = users else { return }
-        print("Selected item: \(users[indexPath.row])")
+        let users = self.fetchUsers()
+        
+        if users.count > 0 {
+            
+            let selectedId = users[indexPath.row].id
+            
+            //Get object models for the selected id
+            let userModel = self.getUserModel(for: selectedId)
+            let addressModel = self.getAddress(for: selectedId)
+            let company = self.getCompany(for: selectedId)
+            let geoModel = self.getGeo(for: selectedId)
+            
+            let storyboard = UIStoryboard(name: Identifiers.StoryboardName.userDetails.rawValue, bundle: nil)
+            let userDetailsVC = storyboard.instantiateViewController(withIdentifier: Identifiers.ViewControllerName.userDetailsVC) as! UserDetailsViewController
+            
+            userDetailsVC.user = userModel
+            userDetailsVC.address = addressModel
+            userDetailsVC.company = company
+            userDetailsVC.geo = geoModel
+            
+            self.navigationController?.pushViewController(userDetailsVC, animated: true)
+        }
     }
 }
 
 //MARK: CoreData helper methods
 extension UsersListViewController {
+    
     func fetchUsers() -> [Users] {
         let allUsers = DatabaseController.shared.fetch(Users.self)
         return allUsers
@@ -140,6 +160,30 @@ extension UsersListViewController {
     func fetchCompanies() -> [Company] {
         let allCompanies = DatabaseController.shared.fetch(Company.self)
         return allCompanies
+    }
+    
+    fileprivate func getUserModel(for id: Int16) -> Users? {
+        let database = DatabaseController.shared
+        let users = database.getPredicatedUsers(for: id)
+        return users
+    }
+    
+    fileprivate func getAddress(for id: Int16) -> Address? {
+        let database = DatabaseController.shared
+        let address = database.getPredicatedAddress(for: id)
+        return address
+    }
+    
+    fileprivate func getCompany(for id: Int16) -> Company? {
+        let database = DatabaseController.shared
+        let company = database.getPredicatedCompany(for: id)
+        return company
+    }
+    
+    fileprivate func getGeo(for id: Int16) -> Geo? {
+        let database = DatabaseController.shared
+        let geo = database.getPredicatedGeo(for: id)
+        return geo
     }
 }
 

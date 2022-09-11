@@ -1,20 +1,24 @@
 //
-//  UserDetailTableViewCell.swift
+//  ProfileImageTableViewCell.swift
 //  Employee Details
 //
-//  Created by Sreejesh Krishnan on 11/09/22.
+//  Created by Sreejesh Krishnan on 12/09/22.
 //
 
 import UIKit
 
-class UserDetailTableViewCell: UITableViewCell {
+class ProfileImageTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        setupUI()
+    }
+    
+    fileprivate func setupUI() {
+        self.profileImageView.setRounded()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -1,16 +1,17 @@
 //
-//  UserDetailTableViewCell.swift
+//  DetailTextViewTableViewCell.swift
 //  Employee Details
 //
-//  Created by Sreejesh Krishnan on 11/09/22.
+//  Created by Sreejesh Krishnan on 12/09/22.
 //
 
 import UIKit
 
-class UserDetailTableViewCell: UITableViewCell {
+class DetailTextViewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var detailTextView: UITextView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -76,4 +76,96 @@ class DatabaseController {
         }
         return .unknown
     }
+    
+    func getPredicatedUsers(for id: Int16) -> Users? {
+
+        let fetchRequest: NSFetchRequest<Users> = Users.fetchRequest()
+
+        let identifierPredicate = NSPredicate(format: "id == %i", id)
+        fetchRequest.predicate = identifierPredicate
+                
+        do {
+            let arrData = try viewContext.fetch(fetchRequest)
+            
+            if arrData.count > 0 {
+                print("User Record found")
+                return arrData.first
+            } else {
+                // Write your code here to add record
+                return nil
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    func getPredicatedCompany(for id: Int16) -> Company? {
+
+        let fetchRequest: NSFetchRequest<Company> = Company.fetchRequest()
+
+        let identifierPredicate = NSPredicate(format: "id == %i", id)
+        fetchRequest.predicate = identifierPredicate
+                
+        do {
+            let arrData = try viewContext.fetch(fetchRequest)
+            
+            if arrData.count > 0 {
+                print("Company Record found")
+                return arrData.first
+            } else {
+                // Write your code here to add record
+                return nil
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    func getPredicatedAddress(for id: Int16) -> Address? {
+
+        let fetchRequest: NSFetchRequest<Address> = Address.fetchRequest()
+
+        let identifierPredicate = NSPredicate(format: "id == %i", id)
+        fetchRequest.predicate = identifierPredicate
+                
+        do {
+            let arrData = try viewContext.fetch(fetchRequest)
+            
+            if arrData.count > 0 {
+                print("Address Record found")
+                return arrData.first
+            } else {
+                // Write your code here to add record
+                return nil
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+    
+    func getPredicatedGeo(for id: Int16) -> Geo? {
+
+        let fetchRequest: NSFetchRequest<Geo> = Geo.fetchRequest()
+
+        let identifierPredicate = NSPredicate(format: "id == %i", id)
+        fetchRequest.predicate = identifierPredicate
+                
+        do {
+            let arrData = try viewContext.fetch(fetchRequest)
+            
+            if arrData.count > 0 {
+                print("Geo Record found")
+                return arrData.first
+            } else {
+                // Write your code here to add record
+                return nil
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
 }
