@@ -11,20 +11,16 @@ class EmployeeDetailsViewModel {
     
     let connectionHandler = ConnectionHandler()
     
-    typealias completionHandler = ((_ response: EmployeeListModel?, _ error: Error?) -> Void)
+    typealias completionHandler = ((_ response: [EmployeeListModel]?, _ error: Error?) -> Void)
     
     func fetchUserDetails(urlString: String, completion: @escaping completionHandler) {
-        
         guard let url = URL(string: urlString) else { return }
-        
         connectionHandler.makeWebRequest(url: url) { response, rawData, error in
-            
             guard let error = error else {
-                
                 if let data = rawData {
                     do {
                         let decoder = JSONDecoder()
-                        let data = try decoder.decode(EmployeeListModel.self, from: data)
+                        let data = try decoder.decode([EmployeeListModel].self, from: data)
                         completion(data, nil)
                     } catch {
                         completion(nil, error)

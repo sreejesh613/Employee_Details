@@ -68,3 +68,30 @@ class BaseViewController: UIViewController {
         }
     }
 }
+
+extension UIView {
+    
+    func setRounded(color : UIColor = UIColor.clear){
+        self.layer.borderWidth = 0.2
+        self.layer.borderColor = color.cgColor
+        self.layer.cornerRadius = self.frame.height/2
+        self.clipsToBounds = true
+    }
+    
+    func makeCardShadow(_ radius:CGFloat = 8) {
+        self.layer.cornerRadius = radius
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        self.layer.shadowRadius = radius
+        self.layer.shadowOpacity = 0.4
+    }
+}
+
+extension UIColor {
+    func bgLight() -> UIColor {
+        return UIColor(red: 247/255, green: 248/255, blue: 250/255, alpha: 1.0)
+    }
+    static var bgLightColor: UIColor {
+        return UIColor().bgLight()
+    }
+}

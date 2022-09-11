@@ -6,16 +6,22 @@
 //
 
 import UIKit
+import SDWebImage
 
 class UsersListViewController: BaseViewController {
 
+    //Outlets
+    @IBOutlet weak var userListTableView: UITableView!
+    
     //Properties
     var userDetailsVM: EmployeeDetailsViewModel?
+    var users: [EmployeeListModel]?
     
     //View life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         userDetailsVM = EmployeeDetailsViewModel()
+        registerCustomCell()
         checkForStoredData()
     }
     
@@ -26,7 +32,18 @@ class UsersListViewController: BaseViewController {
         self.getDataFromTheServer()
     }
     
+    //Register custom cells
+    fileprivate func registerCustomCell() {
+        let userNib = UINib(nibName: Identifiers.NibNames.userListNib, bundle: nil)
+        userListTableView.register(userNib, forCellReuseIdentifier: Identifiers.CellIDs.userListCellId)
+    }
     
+    //Reload Tableview
+    fileprivate func reloadTableView() {
+        DispatchQueue.main.async {
+            self.userListTableView.reloadData()
+        }
+    }
 }
 
 //MARK: API HANDLING
@@ -45,6 +62,9 @@ extension UsersListViewController {
                 //No error
                 if let data = response {
                     print("Data received from the server: \(data)")
+                    self.users = data
+                    //Reload tableview
+                    self.reloadTableView()
                 } else {
                     
                 }
@@ -53,5 +73,53 @@ extension UsersListViewController {
             //Error found
             self.showAlert(title: "Error", message: error.localizedDescription, actionTitles: ["OK"], actions: [nil])
         })
+    }
+}
+
+//MARK: TABLEVIEW DELEGATE AND DATA SOURCE
+extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = userListTableView.dequeueReusableCell(withIdentifier: Identifiers.CellIDs.userListCellId) as! UserListTableViewCell
+        
+        if let users = users {
+            if let profileImage = users[indexPath.row].profile_image {
+                cell.profileImageView.sd_setImage(with: URL(string: profileImage), placeholderImage: UIImage(named: Identifiers.AssetIds.user_placeholder))
+            } else {
+                cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
+            }
+            
+            if let name = users[indexPath.row].name {
+                cell.nameLabel.text = name
+            } else {
+                cell.nameLabel.text = "Name not available"
+            }
+            
+            if let companyName = users[indexPath.row].company?.name {
+                cell.companyLabel.text = companyName
+            } else {
+                cell.companyLabel.text = "Company name not available"
+            }
+        } else {
+            cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
+            cell.nameLabel.text = "Name not available"
+            cell.companyLabel.text = "Company name not available"
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Did select tablevew row at index: \(indexPath)")
+        guard let users = users else { return }
+        print("Selected item: \(users[indexPath.row])")
     }
 }
