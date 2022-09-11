@@ -61,8 +61,9 @@ extension UsersListViewController {
             guard let error = error else {
                 //No error
                 if let data = response {
-                    print("Data received from the server: \(data)")
-                    self.users = data
+                    print("JSONDecoder data received: \(data)")
+                    //Save the decoded values to Core data
+                    DatabaseController.saveContext()
                     //Reload tableview
                     self.reloadTableView()
                 } else {
@@ -80,7 +81,10 @@ extension UsersListViewController {
 extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users?.count ?? 0
+        //Fetch all users from the CoreData
+        let users = self.fetchUsers()
+        
+        return users.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -90,29 +94,38 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = userListTableView.dequeueReusableCell(withIdentifier: Identifiers.CellIDs.userListCellId) as! UserListTableViewCell
         
-        if let users = users {
-            if let profileImage = users[indexPath.row].profile_image {
-                cell.profileImageView.sd_setImage(with: URL(string: profileImage), placeholderImage: UIImage(named: Identifiers.AssetIds.user_placeholder))
-            } else {
-                cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
-            }
+        //Fetch all users from the CoreData
+        let users = self.fetchUsers()
+        
+        if users.count > 0 {
+            let userName = users[indexPath.row].userName
+            let email = users[indexPath.row].email
             
-            if let name = users[indexPath.row].name {
-                cell.nameLabel.text = name
-            } else {
-                cell.nameLabel.text = "Name not available"
-            }
-            
-            if let companyName = users[indexPath.row].company?.name {
-                cell.companyLabel.text = companyName
-            } else {
-                cell.companyLabel.text = "Company name not available"
-            }
-        } else {
-            cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
-            cell.nameLabel.text = "Name not available"
-            cell.companyLabel.text = "Company name not available"
         }
+        
+//        if let users = users {
+//            if let profileImage = users[indexPath.row].profile_image {
+//                cell.profileImageView.sd_setImage(with: URL(string: profileImage), placeholderImage: UIImage(named: Identifiers.AssetIds.user_placeholder))
+//            } else {
+//                cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
+//            }
+//
+//            if let name = users[indexPath.row].name {
+//                cell.nameLabel.text = name
+//            } else {
+//                cell.nameLabel.text = "Name not available"
+//            }
+//
+//            if let companyName = users[indexPath.row].company?.name {
+//                cell.companyLabel.text = companyName
+//            } else {
+//                cell.companyLabel.text = "Company name not available"
+//            }
+//        } else {
+//            cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
+//            cell.nameLabel.text = "Name not available"
+//            cell.companyLabel.text = "Company name not available"
+//        }
         
         return cell
     }
@@ -121,5 +134,13 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
         print("Did select tablevew row at index: \(indexPath)")
         guard let users = users else { return }
         print("Selected item: \(users[indexPath.row])")
+    }
+}
+
+//MARK: CoreData helper methods
+extension UsersListViewController {
+    func fetchUsers() -> [Users] {
+        let allUsers = DatabaseController.getAllUsers()
+        return allUsers
     }
 }

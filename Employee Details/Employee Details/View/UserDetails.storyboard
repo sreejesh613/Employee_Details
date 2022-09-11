@@ -34,7 +34,7 @@
                             <constraint firstItem="Z0j-17-F6G" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="vwK-24-BEJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Get-zE-lfm"/>
+                    <navigationItem key="navigationItem" title="User List" largeTitleDisplayMode="always" id="Get-zE-lfm"/>
                     <connections>
                         <outlet property="userListTableView" destination="Z0j-17-F6G" id="6Yc-oS-de6"/>
                     </connections>

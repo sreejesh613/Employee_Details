@@ -37,6 +37,8 @@
 		79B84DC728CE0D5000C007B8 /* UserDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B84DC528CE0D5000C007B8 /* UserDetailTableViewCell.xib */; };
 		79B84DC928CE179700C007B8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DC828CE179700C007B8 /* BaseViewController.swift */; };
 		79B84DCC28CE26CD00C007B8 /* StringIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DCB28CE26CD00C007B8 /* StringIdentifiers.swift */; };
+		79B84DCF28CE306900C007B8 /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DCE28CE306900C007B8 /* DatabaseController.swift */; };
+		79B84DD228CE359B00C007B8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B84DD128CE359B00C007B8 /* Extensions.swift */; };
 		C2F98D630F47C1260E979785 /* Pods_Employee_Details.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10EDB9732C46F30B246CDE1B /* Pods_Employee_Details.framework */; };
 		DF429E53E1F5C318931EB8A1 /* Pods_Employee_Details_Employee_DetailsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324067A4F67D8C32E4C1E8F1 /* Pods_Employee_Details_Employee_DetailsUITests.framework */; };
 /* End PBXBuildFile section */
@@ -97,6 +99,8 @@
 		79B84DC528CE0D5000C007B8 /* UserDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailTableViewCell.xib; sourceTree = "<group>"; };
 		79B84DC828CE179700C007B8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		79B84DCB28CE26CD00C007B8 /* StringIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringIdentifiers.swift; sourceTree = "<group>"; };
+		79B84DCE28CE306900C007B8 /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
+		79B84DD128CE359B00C007B8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A1A07EA5618015E9E13530A0 /* Pods-Employee DetailsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employee DetailsTests.release.xcconfig"; path = "Target Support Files/Pods-Employee DetailsTests/Pods-Employee DetailsTests.release.xcconfig"; sourceTree = "<group>"; };
 		B893D3F51043D458CF0CCF37 /* Pods-Employee Details-Employee DetailsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employee Details-Employee DetailsUITests.release.xcconfig"; path = "Target Support Files/Pods-Employee Details-Employee DetailsUITests/Pods-Employee Details-Employee DetailsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BEF3B0F04627FD7ED67BC612 /* Pods-Employee DetailsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Employee DetailsTests.debug.xcconfig"; path = "Target Support Files/Pods-Employee DetailsTests/Pods-Employee DetailsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,8 +170,9 @@
 		79B84D6528CDE4F500C007B8 /* Employee Details */ = {
 			isa = PBXGroup;
 			children = (
+				79B84DD028CE358C00C007B8 /* Extensions */,
+				79B84DCD28CE304600C007B8 /* Database Controller */,
 				79B84DCA28CE26B800C007B8 /* String Constants */,
-				79B84DB328CE022F00C007B8 /* User Details */,
 				79B84D9A28CDE50600C007B8 /* Model */,
 				79B84D9B28CDE50C00C007B8 /* View */,
 				79B84DB428CE026000C007B8 /* Base View */,
@@ -276,6 +281,23 @@
 				79B84DCB28CE26CD00C007B8 /* StringIdentifiers.swift */,
 			);
 			path = "String Constants";
+			sourceTree = "<group>";
+		};
+		79B84DCD28CE304600C007B8 /* Database Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79B84DB328CE022F00C007B8 /* User Details */,
+				79B84DCE28CE306900C007B8 /* DatabaseController.swift */,
+			);
+			path = "Database Controller";
+			sourceTree = "<group>";
+		};
+		79B84DD028CE358C00C007B8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				79B84DD128CE359B00C007B8 /* Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DC0135BE725A9A18076E6AD7 /* Pods */ = {
@@ -532,10 +554,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79B84DD228CE359B00C007B8 /* Extensions.swift in Sources */,
 				79B84DC228CE0D4000C007B8 /* UserListTableViewCell.swift in Sources */,
 				79B84D9E28CDE53800C007B8 /* EmployeeListModel.swift in Sources */,
 				79B84DAB28CDF78300C007B8 /* Company+CoreDataProperties.swift in Sources */,
 				79B84DAD28CDF78300C007B8 /* Geo+CoreDataProperties.swift in Sources */,
+				79B84DCF28CE306900C007B8 /* DatabaseController.swift in Sources */,
 				79B84DC928CE179700C007B8 /* BaseViewController.swift in Sources */,
 				79B84DC628CE0D5000C007B8 /* UserDetailTableViewCell.swift in Sources */,
 				79B84DB128CDF78300C007B8 /* Users+CoreDataProperties.swift in Sources */,
