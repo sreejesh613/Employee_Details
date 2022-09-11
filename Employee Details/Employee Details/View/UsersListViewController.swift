@@ -14,13 +14,14 @@ class UsersListViewController: BaseViewController {
     @IBOutlet weak var userListTableView: UITableView!
     
     //Properties
-    var userDetailsVM: EmployeeDetailsViewModel?
+    var userDetailsVM: EmployeeListViewModel?
     var users: [EmployeeListModel]?
     
     //View life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        userDetailsVM = EmployeeDetailsViewModel()
+        userDetailsVM = EmployeeListViewModel()
+        self.userListTableView.backgroundColor = .bgLightColor
         registerCustomCell()
         checkForStoredData()
     }
@@ -28,8 +29,17 @@ class UsersListViewController: BaseViewController {
     //Methods
     fileprivate func checkForStoredData() {
         //If stored data in nil
-        //Initiate API call
-        self.getDataFromTheServer()
+        let database = DatabaseController.shared
+        let usersList = database.fetch(Users.self)
+        if usersList.count > 0 {
+            //Data already exists in the CoreData memory
+            //No need to call the webservice
+            self.reloadTableView()
+        } else {
+            //No data stored
+            //Initiate API call
+            self.getDataFromTheServer()
+        }
     }
     
     //Register custom cells
@@ -54,25 +64,15 @@ extension UsersListViewController {
         self.showActivityIndicatorWithText(text: "Getting data from the server..")
         
         //Initiate API call
-        userDetailsVM?.fetchUserDetails(urlString: API.baseUrl, completion: { response, error in
+        userDetailsVM?.fetchUserDetails(urlString: API.baseUrl, completion: {
             //Stop activity indicator
             self.stopActivityIndicator()
             
-            guard let error = error else {
-                //No error
-                if let data = response {
-                    print("JSONDecoder data received: \(data)")
-                    //Save the decoded values to Core data
-                    DatabaseController.saveContext()
-                    //Reload tableview
-                    self.reloadTableView()
-                } else {
-                    
-                }
-                return
-            }
-            //Error found
-            self.showAlert(title: "Error", message: error.localizedDescription, actionTitles: ["OK"], actions: [nil])
+            let database = DatabaseController.self
+            database.shared.save()
+            
+            //Reload tableview
+            self.reloadTableView()
         })
     }
 }
@@ -84,7 +84,7 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
         //Fetch all users from the CoreData
         let users = self.fetchUsers()
         
-        return users.count
+        return users.count - 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -96,36 +96,29 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
         
         //Fetch all users from the CoreData
         let users = self.fetchUsers()
+        let companies = self.fetchCompanies()
         
         if users.count > 0 {
-            let userName = users[indexPath.row].userName
-            let email = users[indexPath.row].email
+            if let name = users[indexPath.row].name {
+                cell.nameLabel.text = name
+            } else {
+                cell.nameLabel.text = "Name not found"
+            }
             
+            if let profileImage = users[indexPath.row].profileImage {
+                cell.profileImageView.sd_setImage(with: URL(string: profileImage), placeholderImage: UIImage(named: Identifiers.AssetIds.user_placeholder))
+            } else {
+                cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
+            }
         }
         
-//        if let users = users {
-//            if let profileImage = users[indexPath.row].profile_image {
-//                cell.profileImageView.sd_setImage(with: URL(string: profileImage), placeholderImage: UIImage(named: Identifiers.AssetIds.user_placeholder))
-//            } else {
-//                cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
-//            }
-//
-//            if let name = users[indexPath.row].name {
-//                cell.nameLabel.text = name
-//            } else {
-//                cell.nameLabel.text = "Name not available"
-//            }
-//
-//            if let companyName = users[indexPath.row].company?.name {
-//                cell.companyLabel.text = companyName
-//            } else {
-//                cell.companyLabel.text = "Company name not available"
-//            }
-//        } else {
-//            cell.profileImageView.image = UIImage(named: Identifiers.AssetIds.user_placeholder)
-//            cell.nameLabel.text = "Name not available"
-//            cell.companyLabel.text = "Company name not available"
-//        }
+        if companies.count > 0 {
+            if let companyName = companies[indexPath.row].name {
+                cell.companyLabel.text = companyName
+            } else {
+                cell.companyLabel.text = "Not found"
+            }
+        }
         
         return cell
     }
@@ -140,7 +133,13 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: CoreData helper methods
 extension UsersListViewController {
     func fetchUsers() -> [Users] {
-        let allUsers = DatabaseController.getAllUsers()
+        let allUsers = DatabaseController.shared.fetch(Users.self)
         return allUsers
     }
+    
+    func fetchCompanies() -> [Company] {
+        let allCompanies = DatabaseController.shared.fetch(Company.self)
+        return allCompanies
+    }
 }
+

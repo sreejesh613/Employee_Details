@@ -7,81 +7,73 @@
 
 import Foundation
 import CoreData
+import UIKit
+
+enum RecordStatus: Int {
+    case notExist = 0
+    case exists
+    case unknown
+}
 
 class DatabaseController {
-    private init() {}
     
-    //Returns the current Persistent Container for CoreData
-    class func getContext () -> NSManagedObjectContext {
-        return DatabaseController.persistentContainer.viewContext
+    private var viewContext: NSManagedObjectContext!
+    
+    static let shared = DatabaseController()
+    
+    init() {
+        viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
     
-    static var persistentContainer: NSPersistentContainer = {
-        //The container that holds both data model entities
-        let container = NSPersistentContainer(name: "Employee_Details")
+    func add<T: NSManagedObject>(_ type: T.Type) -> T? {
+        guard let entityName = T.entity().name else { return nil }
+        guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: viewContext) else { return nil }
+        let object = T(entity: entity, insertInto: viewContext)
+        return object
+    }
+    
+    func save() {
+        do {
+            try viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func fetch<T: NSManagedObject>(_ type: T.Type) -> [T] {
         
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-            
-            
-        })
-        return container
-    }()
-    
-    // MARK: - Core Data Saving support
-    class func saveContext() {
-        let context = self.getContext()
-//        if context.hasChanges {
-            do {
-                try context.save()
-                print("Data Saved to Context")
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-//        }
+        let request = T.fetchRequest()
+        do {
+            let result = try viewContext.fetch(request)
+            return result as! [T]
+        } catch {
+            print(error.localizedDescription)
+            return []
+        }
     }
     
-        // GET / Fetch / Requests
-            class func getAllUsers() -> Array<Users> {
-                let all = NSFetchRequest<Users>(entityName: "Users")
-                var allUsers = [Users]()
-    
-                do {
-                    let fetched = try DatabaseController.getContext().fetch(all)
-                    allUsers = fetched
-                } catch {
-                    let nserror = error as NSError
-                    //TODO: Handle Error
-                    print(nserror.description)
-                }
-    
-                return allUsers
+    func checkIfDataAlreadyExists(email: String, name: String) -> RecordStatus {
+
+        let fetchRequest: NSFetchRequest<Users> = Users.fetchRequest()
+
+        let identifierPredicate = NSPredicate(format: "email == %@", email)
+        let namePredicate = NSPredicate(format: "name == %@", name)
+        let compundPredicate = NSCompoundPredicate(type: .and, subpredicates: [identifierPredicate, namePredicate])
+        fetchRequest.predicate = compundPredicate
+                
+        do {
+            let arrData = try viewContext.fetch(fetchRequest)
+            
+            if arrData.count > 0 {
+                print("Record already exists")
+                return .exists
+            } else {
+                // Write your code here to add record
+                return .notExist
             }
-    
-    //        // Get Show by uuid
-    //        class func getShowWith(uuid: String) -> ShowModel? {
-    //            let requested = NSFetchRequest<ShowModel>(entityName: "ShowModel")
-    //            requested.predicate = NSPredicate(format: "uuid == %@", uuid)
-    //
-    //            do {
-    //                let fetched = try DatabaseController.getContext().fetch(requested)
-    //
-    //                //fetched is an array we need to convert it to a single object
-    //                if (fetched.count > 1) {
-    //                    //TODO: handle duplicate records
-    //                } else {
-    //                    return fetched.first //only use the first object..
-    //                }
-    //            } catch {
-    //                let nserror = error as NSError
-    //                //TODO: Handle error
-    //                print(nserror.description)
-    //            }
-    //
-    //            return nil
-    //        }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return .unknown
+    }
 }

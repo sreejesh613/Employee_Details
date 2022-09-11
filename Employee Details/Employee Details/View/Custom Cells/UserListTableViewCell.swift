@@ -9,6 +9,7 @@ import UIKit
 
 class UserListTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var companyLabel: UILabel!
@@ -20,7 +21,8 @@ class UserListTableViewCell: UITableViewCell {
     }
     
     fileprivate func setupUI() {
-        self.contentView.backgroundColor = .bgLightColor
+        containerView.makeCardShadow()
+        self.containerView.backgroundColor = .bgLightColor
         self.profileImageView.setRounded()
     }
 

@@ -10,6 +10,7 @@
     <entity name="Company" representedClassName="Company" syncable="YES">
         <attribute name="bs" optional="YES" attributeType="String"/>
         <attribute name="catchPhrase" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Geo" representedClassName="Geo" syncable="YES">
@@ -27,9 +28,9 @@
         <attribute name="website" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Users" positionX="-63" positionY="-18" width="128" height="134"/>
         <element name="Address" positionX="-54" positionY="45" width="128" height="104"/>
-        <element name="Company" positionX="-36" positionY="54" width="128" height="74"/>
+        <element name="Company" positionX="-36" positionY="54" width="128" height="89"/>
         <element name="Geo" positionX="-18" positionY="81" width="128" height="74"/>
+        <element name="Users" positionX="-63" positionY="-18" width="128" height="134"/>
     </elements>
 </model>
