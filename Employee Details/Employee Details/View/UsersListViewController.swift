@@ -102,12 +102,14 @@ class UsersListViewController: BaseViewController {
         var filteredUsers: [Users] = []
         var filteredUserIds: [Int16] = []
         
-        if let usersFetched = usersFetched {
+        guard let usersFetched = usersFetched else { return }
             
-            let filteredArray = usersFetched.compactMap({ $0.name!.contains(item) || $0.email!.contains(item)})
+            if usersFetched.isEmpty { return }
+            
+            let filteredArray = usersFetched.compactMap({ $0.name!.lowercased().contains(item) || $0.email!.lowercased().contains(item)})
             var indexArray: [Int] = []
             for each in filteredArray {
-                if each == true {
+                if each {
                     if let index = filteredArray.firstIndex(of: each) {
                         indexArray.append(index)
                     }
@@ -122,9 +124,7 @@ class UsersListViewController: BaseViewController {
             }
             self.usersFetched = filteredUsers
             self.setupCompanyNames(users: filteredUsers)
-        } else {
-            //user data source is empty
-        }
+        
     }
 }
 
@@ -199,10 +199,9 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let users = self.fetchUsers()
         
-        if users.count > 0 {
-            
+        guard let users = usersFetched,!users.isEmpty else { return }
+        
             let selectedId = users[indexPath.row].id
             
             //Get object models for the selected id
@@ -220,7 +219,7 @@ extension UsersListViewController: UITableViewDelegate, UITableViewDataSource {
             userDetailsVC.geo = geoModel
             
             self.navigationController?.pushViewController(userDetailsVC, animated: true)
-        }
+        
     }
 }
 
