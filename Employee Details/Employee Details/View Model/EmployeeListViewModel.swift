@@ -15,7 +15,7 @@ class EmployeeListViewModel {
 //    let context = DatabaseController.getContext()
     
     
-    func fetchUserDetails(urlString: String, completion: @escaping (() -> Void)) {
+    func fetchUserDetails(urlString: String, completion: @escaping ((_ status: Bool) -> Void)) {
         
         guard let url = URL(string: urlString) else { return }
         
@@ -29,19 +29,19 @@ class EmployeeListViewModel {
                         //Save items in the CoreData
                         self.saveEachModel(model: model)
                         
-                        completion()
+                        completion(true)
                     } catch {
-                        completion()
+                        completion(false)
                     }
                     
                 } else {
                     //No data received
-                    completion()
+                    completion(false)
                 }
                 return
             }
             //Error found
-            completion()
+            completion(false)
         }
     }
 }
@@ -97,5 +97,12 @@ extension EmployeeListViewModel {
         guard let email = model.email, let name = model.name else { return nil}
         
         return(database.checkIfDataAlreadyExists(email: email, name: name))
+    }
+}
+
+//Extension to fetch the search result
+extension EmployeeListViewModel {
+    func fetchSearchResult(searchItem: String) -> [Int16]? {
+        return nil
     }
 }

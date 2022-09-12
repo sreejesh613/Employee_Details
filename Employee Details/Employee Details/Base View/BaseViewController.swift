@@ -94,3 +94,11 @@ extension UIColor {
         return UIColor().bgLight()
     }
 }
+
+extension BaseViewController {
+    func setBorderForTextField(view: UIView) {
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
+    }
+}

@@ -86,9 +86,11 @@ struct EmployeeAddress: Codable {
     }
     
     static let database = DatabaseController.shared
+    
     func storeAddress() {
         guard let address = EmployeeListModel.database.add(Address.self) else { return }
         
+        address.id = id ?? 0
         address.zip = zipCode
         address.suite = suite
         address.street = street
@@ -116,6 +118,7 @@ struct EmployeeGeo: Codable {
 }
 
 struct EmployeeCompany: Codable {
+    
     var id: Int16?
     let name: String?
     let catchPhrase: String?

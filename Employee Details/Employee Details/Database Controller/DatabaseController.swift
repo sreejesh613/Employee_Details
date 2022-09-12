@@ -65,10 +65,8 @@ class DatabaseController {
             let arrData = try viewContext.fetch(fetchRequest)
             
             if arrData.count > 0 {
-                print("Record already exists")
                 return .exists
             } else {
-                // Write your code here to add record
                 return .notExist
             }
         } catch {
@@ -88,10 +86,8 @@ class DatabaseController {
             let arrData = try viewContext.fetch(fetchRequest)
             
             if arrData.count > 0 {
-                print("User Record found")
                 return arrData.first
             } else {
-                // Write your code here to add record
                 return nil
             }
         } catch {
@@ -111,10 +107,8 @@ class DatabaseController {
             let arrData = try viewContext.fetch(fetchRequest)
             
             if arrData.count > 0 {
-                print("Company Record found")
                 return arrData.first
             } else {
-                // Write your code here to add record
                 return nil
             }
         } catch {
@@ -134,10 +128,8 @@ class DatabaseController {
             let arrData = try viewContext.fetch(fetchRequest)
             
             if arrData.count > 0 {
-                print("Address Record found")
                 return arrData.first
             } else {
-                // Write your code here to add record
                 return nil
             }
         } catch {
@@ -157,10 +149,8 @@ class DatabaseController {
             let arrData = try viewContext.fetch(fetchRequest)
             
             if arrData.count > 0 {
-                print("Geo Record found")
                 return arrData.first
             } else {
-                // Write your code here to add record
                 return nil
             }
         } catch {
