@@ -159,3 +159,28 @@ class DatabaseController {
         return nil
     }
 }
+
+//MARK: GENERIC METHOD FOR FETCHING
+extension DatabaseController {
+    func fetchEntityForKey<T:NSManagedObject>(entityName: String, id: Int16) -> T? {
+        
+        let fetchRequest = NSFetchRequest<T>(entityName: NSStringFromClass(T.self))
+        
+        let idPredicate = NSPredicate(format: "id == %i", id)
+        fetchRequest.predicate = idPredicate
+        
+        do {
+            let arrData = try viewContext.fetch(fetchRequest)
+            
+            if arrData.count > 0 {
+                return arrData.first
+            } else {
+                return nil
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+}
+

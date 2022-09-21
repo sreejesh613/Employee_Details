@@ -19,7 +19,6 @@ class UsersListViewController: BaseViewController {
     //Properties
     var userDetailsVM: EmployeeListViewModel?
     let database = DatabaseController.shared
-    
     var textEntered: String? {
         didSet {
             if let text = textEntered {
